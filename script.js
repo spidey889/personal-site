@@ -20,33 +20,58 @@
   const orb = document.querySelector(".orb");
   if (orb && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
     document.body.classList.add("is-pointer");
-    let x = window.innerWidth * 0.7;
-    let y = window.innerHeight * 0.28;
+    let x = window.innerWidth * 0.5;
+    let y = window.innerHeight * 0.4;
     let tx = x;
     let ty = y;
 
-    window.addEventListener("pointermove", (event) => {
-      tx = event.clientX;
-      ty = event.clientY;
+    window.addEventListener("pointermove", (e) => {
+      tx = e.clientX;
+      ty = e.clientY;
     }, { passive: true });
 
     const follow = () => {
-      x += (tx - x) * 0.08;
-      y += (ty - y) * 0.08;
+      x += (tx - x) * 0.07;
+      y += (ty - y) * 0.07;
       orb.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
       requestAnimationFrame(follow);
     };
     follow();
   }
 
+  /* ─── hero parallax on scroll ─── */
+  const heroContent = document.querySelector(".hero-content");
+  const scrollCue = document.querySelector(".scroll-cue");
+
+  if (!reduceMotion && heroContent) {
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const vh = window.innerHeight;
+          if (scrollY < vh) {
+            const p = scrollY / vh;
+            heroContent.style.transform = `translateY(${scrollY * 0.25}px)`;
+            heroContent.style.opacity = String(Math.max(0, 1 - p * 1.4));
+            if (scrollCue) {
+              scrollCue.style.opacity = String(Math.max(0, 1 - p * 4));
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
   /* ─── scroll reveal ─── */
   const reveals = document.querySelectorAll(".reveal");
 
   if (reduceMotion) {
-    // If motion is reduced, show everything immediately
     reveals.forEach((el) => el.classList.add("is-visible"));
   } else {
-    // Assign stagger delays — group siblings under the same parent
+    // Stagger siblings under the same parent
     const groups = new Map();
     reveals.forEach((el) => {
       const parent = el.parentElement;
@@ -56,7 +81,7 @@
 
     groups.forEach((children) => {
       children.forEach((child, i) => {
-        child.setAttribute("data-delay", String(Math.min(i, 8)));
+        child.setAttribute("data-delay", String(Math.min(i, 6)));
       });
     });
 
@@ -69,7 +94,7 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
 
     reveals.forEach((el) => observer.observe(el));
@@ -100,18 +125,26 @@
 
   const seed = () => {
     stars.length = 0;
-    const count = Math.round((width * height) / 12000);
-    for (let i = 0; i < count; i += 1) {
-      const isHero = Math.random() < 0.03;
-      const isMedium = !isHero && Math.random() < 0.1;
+    const count = Math.round((width * height) / 10000);
+    for (let i = 0; i < count; i++) {
+      const isHero = Math.random() < 0.025;
+      const isMed = !isHero && Math.random() < 0.1;
       stars.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: isHero ? 1.8 + Math.random() * 0.5 : isMedium ? 1.1 + Math.random() * 0.3 : Math.random() * 0.85 + 0.2,
-        base: isHero ? 0.5 + Math.random() * 0.3 : Math.random() * 0.45 + 0.12,
+        r: isHero
+          ? 1.6 + Math.random() * 0.6
+          : isMed
+            ? 1.0 + Math.random() * 0.35
+            : Math.random() * 0.8 + 0.18,
+        base: isHero
+          ? 0.45 + Math.random() * 0.35
+          : Math.random() * 0.4 + 0.1,
         phase: Math.random() * Math.PI * 2,
-        speed: isHero ? 0.3 + Math.random() * 0.3 : Math.random() * 0.6 + 0.25,
-        gold: isHero ? true : Math.random() > 0.78,
+        speed: isHero
+          ? 0.25 + Math.random() * 0.25
+          : Math.random() * 0.55 + 0.2,
+        gold: isHero || Math.random() > 0.8,
         isHero,
       });
     }
@@ -120,24 +153,24 @@
   const draw = (time) => {
     ctx.clearRect(0, 0, width, height);
     const t = time * 0.001;
-    for (const star of stars) {
-      const twinkle = reduceMotion ? 1 : 0.55 + Math.sin(t * star.speed + star.phase) * 0.45;
-      const alpha = star.base * twinkle;
+    for (const s of stars) {
+      const tw = reduceMotion ? 1 : 0.5 + Math.sin(t * s.speed + s.phase) * 0.5;
+      const a = s.base * tw;
       ctx.beginPath();
 
-      if (star.isHero) {
-        // Hero stars get a soft glow
-        const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.r * 3);
-        gradient.addColorStop(0, `rgba(212, 180, 131, ${alpha})`);
-        gradient.addColorStop(0.4, `rgba(212, 180, 131, ${alpha * 0.4})`);
-        gradient.addColorStop(1, `rgba(212, 180, 131, 0)`);
-        ctx.fillStyle = gradient;
-        ctx.arc(star.x, star.y, star.r * 3, 0, Math.PI * 2);
+      if (s.isHero) {
+        // Hero stars get a soft radial glow
+        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 3.5);
+        g.addColorStop(0, `rgba(212,180,131,${a})`);
+        g.addColorStop(0.35, `rgba(212,180,131,${a * 0.35})`);
+        g.addColorStop(1, "rgba(212,180,131,0)");
+        ctx.fillStyle = g;
+        ctx.arc(s.x, s.y, s.r * 3.5, 0, Math.PI * 2);
       } else {
-        ctx.fillStyle = star.gold
-          ? `rgba(212, 180, 131, ${alpha})`
-          : `rgba(236, 231, 222, ${alpha})`;
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fillStyle = s.gold
+          ? `rgba(212,180,131,${a})`
+          : `rgba(232,228,219,${a})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       }
 
       ctx.fill();

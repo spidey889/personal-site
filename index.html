@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="vinit — developer and builder from india. ad astra per aspera." />
-    <meta name="theme-color" content="#0c0d0e" />
+    <meta name="theme-color" content="#08090d" />
     <meta name="color-scheme" content="dark" />
     <meta property="og:title" content="vinit — ad astra per aspera" />
     <meta property="og:description" content="developer and builder from india. still building, still figuring things out." />
@@ -14,99 +14,118 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">skip to content</a>
+    <a class="skip-link" href="#about">skip to content</a>
 
     <canvas id="stars" aria-hidden="true"></canvas>
     <div class="atmosphere" aria-hidden="true"></div>
     <div class="orb" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
 
-    <div class="shell">
-      <aside class="identity">
-        <div class="identity-top reveal">
-          <a class="mark" href="#" aria-label="vinit, home">
-            <svg class="star" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 1.6l1.62 7.28L21 10.5l-7.38 1.62L12 19.4l-1.62-7.28L3 10.5l7.38-1.62L12 1.6z" />
-            </svg>
-          </a>
-          <p class="eyebrow">builder · india</p>
-          <h1>vinit</h1>
-          <p class="motto">ad astra per aspera</p>
-          <div class="motto-rule" aria-hidden="true"></div>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <svg class="hero-star" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 1.6l1.62 7.28L21 10.5l-7.38 1.62L12 19.4l-1.62-7.28L3 10.5l7.38-1.62L12 1.6z" />
+        </svg>
+        <p class="hero-label">builder · india</p>
+        <h1 class="hero-name">vinit</h1>
+        <p class="hero-motto">ad astra per aspera</p>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-content reveal">
+          <p>i'm 20, from india, and i like building things. mostly software, mostly because i genuinely enjoy making things from scratch.</p>
+          <p>right now i'm building <a href="#project-cap">cap context</a>, a tool for carrying context between ai conversations. i like working on ideas that solve problems i actually run into, and seeing how far i can take them.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section class="work" id="work">
+      <div class="container">
+        <div class="section-label reveal">
+          <span class="label-text">selected work</span>
+          <span class="label-line" aria-hidden="true"></span>
         </div>
 
-        <nav class="social reveal" aria-label="elsewhere">
-          <a href="https://github.com/spidey889" target="_blank" rel="noreferrer">
-            github
-            <span class="arrow" aria-hidden="true">↗</span>
+        <article class="project-card reveal" id="project-cap">
+          <div class="project-accent" aria-hidden="true"></div>
+          <span class="project-num" aria-hidden="true">01</span>
+          <div class="project-content">
+            <div class="project-header">
+              <h3>CapContext</h3>
+              <span class="badge active">
+                <span class="badge-dot" aria-hidden="true"></span>
+                building now
+              </span>
+            </div>
+            <p>chrome extension that carries context between ai conversations across claude, chatgpt, gemini, grok, and deepseek.</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-accent" aria-hidden="true"></div>
+          <span class="project-num" aria-hidden="true">02</span>
+          <div class="project-content">
+            <div class="project-header">
+              <h3>Spreadz</h3>
+              <span class="badge">solo project</span>
+            </div>
+            <p>real-time chat platform built for college students, built solo.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Connect -->
+    <section class="connect" id="connect">
+      <div class="container">
+        <div class="section-label reveal">
+          <span class="label-text">elsewhere</span>
+          <span class="label-line" aria-hidden="true"></span>
+        </div>
+        <nav class="connect-links reveal" aria-label="social links">
+          <a href="https://github.com/spidey889" target="_blank" rel="noreferrer" class="connect-link">
+            <span class="connect-link-name">github</span>
+            <span class="connect-link-arrow">↗</span>
           </a>
-          <a href="mailto:vinitrajpurohit09@gmail.com">
-            email
-            <span class="arrow" aria-hidden="true">↗</span>
+          <a href="mailto:vinitrajpurohit09@gmail.com" class="connect-link">
+            <span class="connect-link-name">email</span>
+            <span class="connect-link-arrow">↗</span>
           </a>
         </nav>
-
         <p class="clock reveal" aria-live="polite">
           <span data-clock>––:––</span>
           <span class="clock-place">india</span>
         </p>
-      </aside>
+      </div>
+    </section>
 
-      <main id="main">
-        <section class="bio" aria-label="about">
-          <p class="reveal">i'm 20, from india, and i like building things. mostly software, mostly because i genuinely enjoy making things from scratch.</p>
-          <p class="reveal">right now i'm building <a href="#cap-context">cap context</a>, a tool for carrying context between ai conversations. i like working on ideas that solve problems i actually run into, and seeing how far i can take them.</p>
-        </section>
-
-        <section class="work" aria-labelledby="work-title">
-          <div class="section-head reveal">
-            <h2 id="work-title">selected work</h2>
-            <span class="rule" aria-hidden="true"></span>
-          </div>
-
-          <article class="project reveal" id="cap-context">
-            <span class="index">01</span>
-            <div class="project-body">
-              <div class="project-title">
-                <h3>CapContext</h3>
-                <span class="status">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  now
-                </span>
-              </div>
-              <p>chrome extension that carries context between ai conversations across claude, chatgpt, gemini, grok, and deepseek.</p>
-            </div>
-          </article>
-
-          <article class="project reveal">
-            <span class="index">02</span>
-            <div class="project-body">
-              <div class="project-title">
-                <h3>Spreadz</h3>
-                <span class="status quiet">solo</span>
-              </div>
-              <p>real-time chat platform built for college students, built solo.</p>
-            </div>
-          </article>
-        </section>
-
-        <footer class="signoff reveal">
-          <hr class="gold-rule" aria-hidden="true" />
-          <div class="signoff-content">
-            <svg class="signoff-star" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 1.6l1.62 7.28L21 10.5l-7.38 1.62L12 19.4l-1.62-7.28L3 10.5l7.38-1.62L12 1.6z" />
-            </svg>
-            <p>still building, still figuring things out.</p>
-          </div>
-        </footer>
-      </main>
-    </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-rule" aria-hidden="true"></div>
+        <div class="footer-content reveal">
+          <svg class="footer-star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 1.6l1.62 7.28L21 10.5l-7.38 1.62L12 19.4l-1.62-7.28L3 10.5l7.38-1.62L12 1.6z" />
+          </svg>
+          <p class="footer-quote">still building, still figuring things out.</p>
+        </div>
+      </div>
+    </footer>
 
     <script src="script.js"></script>
   </body>

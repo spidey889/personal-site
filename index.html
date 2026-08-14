@@ -3,17 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#181a1c" />
+    <meta name="theme-color" content="#111214" />
     <meta
       name="description"
-      content="Vinit — building things that solve problems I actually have."
+      content="vinit — i build the tools i wish already existed."
     />
+    <meta property="og:title" content="vinit" />
+    <meta
+      property="og:description"
+      content="i build the tools i wish already existed."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
     <title>vinit</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Figtree:ital,wght@0,400..600;1,400..600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -23,7 +30,7 @@
       <div class="reference-column">
         <header class="identity">
           <h1>vinit</h1>
-          <p>building things that solve problems i actually have.</p>
+          <p>i build the tools i wish already existed.</p>
         </header>
 
         <section class="bio" aria-labelledby="bio-title">
@@ -39,7 +46,8 @@
               href="https://github.com/spidey889/context-generator"
               target="_blank"
               rel="noopener noreferrer"
-              >capcontext</a
+              class="inline-link"
+              >capcontext<span class="link-arrow" aria-hidden="true">↗</span></a
             >, a tool for carrying context between ai conversations without
             starting from zero.
           </p>
@@ -58,15 +66,20 @@
           <h2 id="writeups-title">projects</h2>
           <div class="writeup-list">
             <article class="writeup" id="capcontext">
-              <time>now</time>
+              <time>2026</time>
               <p>
                 <a
                   href="https://github.com/spidey889/context-generator"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >capcontext</a
+                  class="project-link"
+                  >capcontext<span class="link-arrow" aria-hidden="true"
+                    >↗</span
+                  ></a
                 >
-                <span>— carrying context between ai conversations.</span>
+                <span class="project-desc"
+                  >— carrying context between ai conversations.</span
+                >
               </p>
             </article>
             <article class="writeup" id="spreadz">
@@ -76,9 +89,10 @@
                   href="https://github.com/spidey889/Spreadz-"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >spreadz</a
+                  class="project-link"
+                  >spreadz<span class="link-arrow" aria-hidden="true">↗</span></a
                 >
-                <span
+                <span class="project-desc"
                   >— a real-time chat platform built solo for college
                   students.</span
                 >
@@ -92,7 +106,8 @@
             href="https://github.com/spidey889"
             target="_blank"
             rel="noopener noreferrer"
-            >github</a
+            class="footer-link"
+            >github<span class="link-arrow" aria-hidden="true">↗</span></a
           >
           <div class="email-action">
             <button
@@ -115,10 +130,12 @@
         </footer>
       </div>
     </main>
+
     <div class="copy-toast" role="status" aria-live="polite" aria-atomic="true">
       <span class="copy-toast-mark" aria-hidden="true">✓</span>
       <span class="copy-toast-text">email copied</span>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>

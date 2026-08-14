@@ -1,5 +1,6 @@
-/* Copy feedback: hover reveals a bracketed prompt, while copying uses a temporary snackbar. */
+/* Copy feedback: the prompt follows the email hover target and briefly becomes copied after success. */
 const copyTriggers = document.querySelectorAll("[data-email]");
+const copyPrompt = document.querySelector(".copy-prompt");
 const copyToast = document.querySelector(".copy-toast");
 let toastTimer;
 
@@ -41,6 +42,15 @@ const copyEmail = async (trigger) => {
     }
   } catch {
     copied = fallbackCopy(email);
+  }
+
+  if (copyPrompt) {
+    copyPrompt.textContent = copied ? "[ copied ]" : "[ try again ]";
+    copyPrompt.classList.toggle("is-copied", copied);
+    window.setTimeout(() => {
+      copyPrompt.textContent = "[ copy? ]";
+      copyPrompt.classList.remove("is-copied");
+    }, 1900);
   }
 
   showToast(copied);

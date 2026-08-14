@@ -44,18 +44,20 @@ const copyEmail = async (trigger) => {
     copied = fallbackCopy(email);
   }
 
+  const copyLabel = copied ? "Email copied" : "Could not copy email";
+  copyTriggers.forEach((item) => item.setAttribute("aria-label", copyLabel));
+
   if (copyPrompt) {
     copyPrompt.textContent = copied ? "[ copied ]" : "[ try again ]";
     copyPrompt.classList.toggle("is-copied", copied);
     window.setTimeout(() => {
       copyPrompt.textContent = "[ copy? ]";
       copyPrompt.classList.remove("is-copied");
+      copyTriggers.forEach((item) => item.setAttribute("aria-label", "Copy Vinit's email address"));
     }, 1900);
   }
 
   showToast(copied);
-  trigger.setAttribute("aria-label", copied ? "Email copied" : "Could not copy email");
-  window.setTimeout(() => trigger.setAttribute("aria-label", "Copy Vinit's email address"), 1900);
 };
 
 copyTriggers.forEach((trigger) => trigger.addEventListener("click", () => copyEmail(trigger)));

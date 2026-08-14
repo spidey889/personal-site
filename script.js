@@ -21,12 +21,17 @@ const showToast = (copied) => {
   if (!copyToast) return;
 
   copyToast.querySelector(".copy-toast-mark").textContent = copied ? "✓" : "!";
-  copyToast.querySelector(".copy-toast-text").textContent = copied ? "email copied" : "copy failed";
+  copyToast.querySelector(".copy-toast-text").textContent = copied
+    ? "email copied"
+    : "copy failed";
   copyToast.classList.remove("is-visible");
   void copyToast.offsetWidth;
   copyToast.classList.add("is-visible");
   window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => copyToast.classList.remove("is-visible"), 1900);
+  toastTimer = window.setTimeout(
+    () => copyToast.classList.remove("is-visible"),
+    1900,
+  );
 };
 
 const copyEmail = async (trigger) => {
@@ -53,11 +58,15 @@ const copyEmail = async (trigger) => {
     window.setTimeout(() => {
       copyPrompt.textContent = "[ copy? ]";
       copyPrompt.classList.remove("is-copied");
-      copyTriggers.forEach((item) => item.setAttribute("aria-label", "Copy Vinit's email address"));
+      copyTriggers.forEach((item) =>
+        item.setAttribute("aria-label", "Copy Vinit's email address"),
+      );
     }, 1900);
   }
 
   showToast(copied);
 };
 
-copyTriggers.forEach((trigger) => trigger.addEventListener("click", () => copyEmail(trigger)));
+copyTriggers.forEach((trigger) =>
+  trigger.addEventListener("click", () => copyEmail(trigger)),
+);

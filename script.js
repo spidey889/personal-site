@@ -1,5 +1,7 @@
-/* Copy feedback: keep the interaction obvious without changing the reference layout. */
+/* Copy feedback: a small, temporary snackbar that does not disturb the reading layout. */
 const emailButton = document.querySelector(".email-copy");
+const copyToast = document.querySelector(".copy-toast");
+let toastTimer;
 
 const fallbackCopy = (value) => {
   const input = document.createElement("textarea");
@@ -12,6 +14,20 @@ const fallbackCopy = (value) => {
   const copied = document.execCommand("copy");
   input.remove();
   return copied;
+};
+
+const showToast = (copied) => {
+  if (!copyToast) return;
+
+  copyToast.querySelector(".copy-toast-mark").textContent = copied ? "✓" : "!";
+  copyToast.querySelector(".copy-toast-text").textContent = copied ? "email copied" : "copy failed";
+  copyToast.classList.remove("is-visible");
+  void copyToast.offsetWidth;
+  copyToast.classList.add("is-visible");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => {
+    copyToast.classList.remove("is-visible");
+  }, 1900);
 };
 
 if (emailButton) {
@@ -30,14 +46,10 @@ if (emailButton) {
       copied = fallbackCopy(email);
     }
 
-    emailButton.classList.remove("is-copied", "is-error");
-    void emailButton.offsetWidth;
-    emailButton.classList.add(copied ? "is-copied" : "is-error");
+    showToast(copied);
     emailButton.setAttribute("aria-label", copied ? "Email copied" : "Could not copy email");
-
     window.setTimeout(() => {
-      emailButton.classList.remove("is-copied", "is-error");
       emailButton.setAttribute("aria-label", "Copy Vinit's email address");
-    }, 1800);
+    }, 1900);
   });
 }

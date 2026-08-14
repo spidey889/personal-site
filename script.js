@@ -1,5 +1,5 @@
-/* Copy feedback: a small, temporary snackbar that does not disturb the reading layout. */
-const emailButton = document.querySelector(".email-copy");
+/* Copy feedback: hover reveals a bracketed prompt, while copying uses a temporary snackbar. */
+const copyTriggers = document.querySelectorAll("[data-email]");
 const copyToast = document.querySelector(".copy-toast");
 let toastTimer;
 
@@ -25,31 +25,27 @@ const showToast = (copied) => {
   void copyToast.offsetWidth;
   copyToast.classList.add("is-visible");
   window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => {
-    copyToast.classList.remove("is-visible");
-  }, 1900);
+  toastTimer = window.setTimeout(() => copyToast.classList.remove("is-visible"), 1900);
 };
 
-if (emailButton) {
-  emailButton.addEventListener("click", async () => {
-    const email = emailButton.dataset.email;
-    let copied = false;
+const copyEmail = async (trigger) => {
+  const email = trigger.dataset.email;
+  let copied = false;
 
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(email);
-        copied = true;
-      } else {
-        copied = fallbackCopy(email);
-      }
-    } catch {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(email);
+      copied = true;
+    } else {
       copied = fallbackCopy(email);
     }
+  } catch {
+    copied = fallbackCopy(email);
+  }
 
-    showToast(copied);
-    emailButton.setAttribute("aria-label", copied ? "Email copied" : "Could not copy email");
-    window.setTimeout(() => {
-      emailButton.setAttribute("aria-label", "Copy Vinit's email address");
-    }, 1900);
-  });
-}
+  showToast(copied);
+  trigger.setAttribute("aria-label", copied ? "Email copied" : "Could not copy email");
+  window.setTimeout(() => trigger.setAttribute("aria-label", "Copy Vinit's email address"), 1900);
+};
+
+copyTriggers.forEach((trigger) => trigger.addEventListener("click", () => copyEmail(trigger)));

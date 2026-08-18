@@ -1,99 +1,109 @@
 /* ==========================================================================
-   Personal Site Script — Micro-interactions, Keyboard Shortcut & Clipboard
+   Personal Site Script — Clipboard Copy & Micro-interactions
    ========================================================================== */
 
 (function () {
   "use strict";
 
+  // DOM references
   const copyTriggers = document.querySelectorAll("[data-email]");
-  const copyPrompt = document.querySelector(".copy-prompt");
-  const copyToast = document.querySelector(".copy-toast");
-  let toastTimer = null;
+  const copyPrompt   = document.querySelector(".copy-prompt");
+  const copyToast    = document.querySelector(".copy-toast");
+  const toastMark    = copyToast?.querySelector(".copy-toast-mark");
+  const toastText    = copyToast?.querySelector(".copy-toast-text");
+
+  // Timers
+  let toastTimer  = null;
   let promptTimer = null;
-  const EMAIL_ADDRESS = "vinitrajpurohit09@gmail.com";
+
+  const EMAIL = "vinitrajpurohit09@gmail.com";
+  const RESET_LABEL = "Copy Vinit's email address";
 
   /* --------------------------------------------------------------------------
-     Clipboard Copy with Fallback
+     Clipboard helpers
      -------------------------------------------------------------------------- */
-  const fallbackCopy = (text) => {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.top = "-9999px";
-    textarea.style.left = "-9999px";
-    textarea.style.opacity = "0";
-    document.body.appendChild(textarea);
-    textarea.focus();
-    textarea.select();
 
-    let success = false;
+  // Fallback for browsers without navigator.clipboard
+  function fallbackCopy(text) {
+    const el = document.createElement("textarea");
+    el.value = text;
+    el.setAttribute("readonly", "");
+    Object.assign(el.style, { position: "fixed", top: "-9999px", left: "-9999px", opacity: "0" });
+    document.body.appendChild(el);
+    el.focus();
+    el.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch { ok = false; }
+    el.remove();
+    return ok;
+  }
+
+  async function copyToClipboard(text) {
     try {
-      success = document.execCommand("copy");
-    } catch (err) {
-      success = false;
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+      return fallbackCopy(text);
+    } catch {
+      return fallbackCopy(text);
     }
-    textarea.remove();
-    return success;
-  };
+  }
 
-  const showToast = (copied) => {
+  /* --------------------------------------------------------------------------
+     UI feedback
+     -------------------------------------------------------------------------- */
+
+  function showToast(ok) {
     if (!copyToast) return;
 
-    const toastMark = copyToast.querySelector(".copy-toast-mark");
-    const toastText = copyToast.querySelector(".copy-toast-text");
+    if (toastMark) toastMark.textContent = ok ? "✓" : "!";
+    if (toastText) toastText.textContent = ok ? "email copied" : "copy failed";
 
-    if (toastMark) toastMark.textContent = copied ? "✓" : "!";
-    if (toastText)
-      toastText.textContent = copied ? "email copied" : "copy failed";
-
+    // Remove then re-add to retrigger the CSS transition
     copyToast.classList.remove("is-visible");
-    // Trigger reflow to restart CSS animation cleanly
     void copyToast.offsetWidth;
     copyToast.classList.add("is-visible");
 
     window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => {
-      copyToast.classList.remove("is-visible");
-    }, 2200);
-  };
+    toastTimer = window.setTimeout(() => copyToast.classList.remove("is-visible"), 2200);
+  }
 
-  const executeCopy = async (targetEmail) => {
-    const email = targetEmail || EMAIL_ADDRESS;
-    let copied = false;
+  function resetPrompt() {
+    if (!copyPrompt) return;
+    copyPrompt.textContent = "[ copy? ]";
+    copyPrompt.classList.remove("is-copied");
+    copyTriggers.forEach((el) => el.setAttribute("aria-label", RESET_LABEL));
+  }
 
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(email);
-        copied = true;
-      } else {
-        copied = fallbackCopy(email);
-      }
-    } catch {
-      copied = fallbackCopy(email);
-    }
+  /* --------------------------------------------------------------------------
+     Copy action
+     -------------------------------------------------------------------------- */
 
-    const copyLabel = copied ? "Email copied to clipboard" : "Could not copy email";
-    copyTriggers.forEach((item) => item.setAttribute("aria-label", copyLabel));
+  async function executeCopy(email = EMAIL) {
+    const ok = await copyToClipboard(email);
 
+    // Update aria-labels
+    const label = ok ? "Email copied to clipboard" : "Could not copy email";
+    copyTriggers.forEach((el) => el.setAttribute("aria-label", label));
+
+    // Update copy prompt text
     if (copyPrompt) {
-      copyPrompt.textContent = copied ? "[ copied ✓ ]" : "[ try again ]";
-      copyPrompt.classList.toggle("is-copied", copied);
+      copyPrompt.textContent = ok ? "[ copied ✓ ]" : "[ try again ]";
+      copyPrompt.classList.toggle("is-copied", ok);
 
       window.clearTimeout(promptTimer);
-      promptTimer = window.setTimeout(() => {
-        copyPrompt.textContent = "[ copy? ]";
-        copyPrompt.classList.remove("is-copied");
-        copyTriggers.forEach((item) =>
-          item.setAttribute("aria-label", "Copy Vinit's email address")
-        );
-      }, 2000);
+      promptTimer = window.setTimeout(resetPrompt, 2000);
     }
 
-    showToast(copied);
-  };
+    showToast(ok);
+  }
 
-  /* Event Listeners */
+  /* --------------------------------------------------------------------------
+     Event listeners
+     -------------------------------------------------------------------------- */
+
+  // Click on any [data-email] element
   copyTriggers.forEach((trigger) => {
     trigger.addEventListener("click", (e) => {
       e.preventDefault();
@@ -101,14 +111,11 @@
     });
   });
 
-  /* Keyboard shortcut: Press 'c' to copy email */
+  // Keyboard shortcut: press "c" anywhere on the page
   window.addEventListener("keydown", (e) => {
-    const activeTagName = document.activeElement?.tagName.toLowerCase();
-    if (activeTagName === "input" || activeTagName === "textarea") return;
+    const tag = document.activeElement?.tagName.toLowerCase();
+    if (tag === "input" || tag === "textarea") return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-
-    if (e.key === "c" || e.key === "C") {
-      executeCopy(EMAIL_ADDRESS);
-    }
+    if (e.key === "c" || e.key === "C") executeCopy();
   });
 })();

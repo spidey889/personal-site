@@ -9,6 +9,7 @@
   const copyPrompt = document.querySelector(".copy-prompt");
   const copyToast = document.querySelector(".copy-toast");
   let toastTimer = null;
+  let promptTimer = null;
   const EMAIL_ADDRESS = "vinitrajpurohit09@gmail.com";
 
   /* --------------------------------------------------------------------------
@@ -79,7 +80,8 @@
       copyPrompt.textContent = copied ? "[ copied ✓ ]" : "[ try again ]";
       copyPrompt.classList.toggle("is-copied", copied);
 
-      window.setTimeout(() => {
+      window.clearTimeout(promptTimer);
+      promptTimer = window.setTimeout(() => {
         copyPrompt.textContent = "[ copy? ]";
         copyPrompt.classList.remove("is-copied");
         copyTriggers.forEach((item) =>

@@ -5,10 +5,8 @@
 
 :root {
   --canvas: #111214;
-  --canvas-surface: #191a1d;
   --copy: #dedcd7;
   --copy-muted: #95948f;
-  --copy-faint: #636567;
   --link: #f3f1ec;
   --link-underline: rgba(243, 241, 236, 0.28);
   --link-hover: #ffffff;

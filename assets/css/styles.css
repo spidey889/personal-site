@@ -3,11 +3,13 @@
    Typography: EB Garamond + Figtree + DM Mono
    ========================================================================== */
 
+
 /* --------------------------------------------------------------------------
    Design Tokens
    -------------------------------------------------------------------------- */
 
 :root {
+
   /* Colors */
   --canvas: #111214;
   --copy: #dedcd7;
@@ -26,7 +28,9 @@
   /* Easing */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
 }
+
 
 /* --------------------------------------------------------------------------
    Reset & Base
@@ -67,6 +71,7 @@ body {
   color: #ffffff;
 }
 
+
 /* --------------------------------------------------------------------------
    Links & Buttons
    -------------------------------------------------------------------------- */
@@ -99,7 +104,7 @@ button:focus-visible {
   border-radius: 2px;
 }
 
-/* Diagonal arrow on links */
+/* Diagonal arrow on external links */
 .link-arrow {
   display: inline-block;
   font-family: var(--font-sans);
@@ -119,6 +124,7 @@ a:hover .link-arrow {
   transform: translate(2px, -2px);
 }
 
+
 /* --------------------------------------------------------------------------
    Layout
    -------------------------------------------------------------------------- */
@@ -135,6 +141,7 @@ a:hover .link-arrow {
   margin: 0 auto;
 }
 
+
 /* --------------------------------------------------------------------------
    Page Entrance Animations
    -------------------------------------------------------------------------- */
@@ -150,7 +157,7 @@ a:hover .link-arrow {
   }
 }
 
-.identity  { animation: fadeUp 700ms var(--ease-spring) 50ms  both; }
+.identity  { animation: fadeUp 700ms var(--ease-spring)  50ms both; }
 .bio       { animation: fadeUp 700ms var(--ease-spring) 130ms both; margin-top: 54px; }
 .writeups  { animation: fadeUp 700ms var(--ease-spring) 210ms both; margin-top: 58px; }
 
@@ -158,6 +165,7 @@ a:hover .link-arrow {
   animation: fadeUp 700ms var(--ease-spring) 290ms both;
   margin-top: 58px;
 }
+
 
 /* --------------------------------------------------------------------------
    Identity Header
@@ -181,6 +189,7 @@ a:hover .link-arrow {
   letter-spacing: -0.005em;
 }
 
+
 /* --------------------------------------------------------------------------
    Bio Section
    -------------------------------------------------------------------------- */
@@ -201,6 +210,7 @@ a:hover .link-arrow {
   color: var(--link);
   white-space: nowrap;
 }
+
 
 /* --------------------------------------------------------------------------
    Projects Section
@@ -252,6 +262,7 @@ a:hover .link-arrow {
   color: var(--copy);
   margin-left: 2px;
 }
+
 
 /* --------------------------------------------------------------------------
    Footer
@@ -316,6 +327,7 @@ a:hover .link-arrow {
   text-decoration: none;
 }
 
+
 /* --------------------------------------------------------------------------
    Copy Toast
    -------------------------------------------------------------------------- */
@@ -368,6 +380,7 @@ a:hover .link-arrow {
   background: rgba(74, 222, 128, 0.08);
 }
 
+
 /* --------------------------------------------------------------------------
    Accessibility
    -------------------------------------------------------------------------- */
@@ -384,22 +397,31 @@ a:hover .link-arrow {
   border: 0;
 }
 
+
 /* --------------------------------------------------------------------------
    Responsive — Mobile
    -------------------------------------------------------------------------- */
 
 @media (max-width: 640px) {
+
   .reference-page   { padding: 80px 20px 72px; }
+
   .identity h1      { font-size: 25px; }
   .identity p       { font-size: 16px; }
+
   .bio              { margin-top: 44px; }
   .bio p            { font-size: 17.5px; line-height: 1.65; margin-bottom: 22px; }
+
   .writeups         { margin-top: 46px; }
   .writeup          { grid-template-columns: 64px 1fr; font-size: 17px; }
+
   .reference-footer { margin-top: 48px; gap: 20px; font-size: 17px; }
+
   .copy-prompt      { font-size: 12px; }
   .copy-toast       { right: 16px; bottom: 16px; font-size: 13px; }
+
 }
+
 
 /* --------------------------------------------------------------------------
    Reduced Motion

@@ -5,35 +5,53 @@
 (function () {
   "use strict";
 
-  // DOM references
+
+  /* --------------------------------------------------------------------------
+     DOM References
+     -------------------------------------------------------------------------- */
+
   const copyTriggers = document.querySelectorAll("[data-email]");
   const copyPrompt   = document.querySelector(".copy-prompt");
   const copyToast    = document.querySelector(".copy-toast");
   const toastMark    = copyToast?.querySelector(".copy-toast-mark");
   const toastText    = copyToast?.querySelector(".copy-toast-text");
 
-  // Timers
+
+  /* --------------------------------------------------------------------------
+     State
+     -------------------------------------------------------------------------- */
+
   let toastTimer  = null;
   let promptTimer = null;
 
-  const EMAIL = "vinitrajpurohit09@gmail.com";
+  const EMAIL       = "vinitrajpurohit09@gmail.com";
   const RESET_LABEL = "Copy Vinit's email address";
 
+
   /* --------------------------------------------------------------------------
-     Clipboard helpers
+     Clipboard Helpers
      -------------------------------------------------------------------------- */
 
   // Fallback for browsers without navigator.clipboard
   function fallbackCopy(text) {
     const el = document.createElement("textarea");
+
     el.value = text;
     el.setAttribute("readonly", "");
-    Object.assign(el.style, { position: "fixed", top: "-9999px", left: "-9999px", opacity: "0" });
+    Object.assign(el.style, {
+      position: "fixed",
+      top: "-9999px",
+      left: "-9999px",
+      opacity: "0",
+    });
+
     document.body.appendChild(el);
     el.focus();
     el.select();
+
     let ok = false;
     try { ok = document.execCommand("copy"); } catch { ok = false; }
+
     el.remove();
     return ok;
   }
@@ -50,8 +68,9 @@
     }
   }
 
+
   /* --------------------------------------------------------------------------
-     UI feedback
+     UI Feedback
      -------------------------------------------------------------------------- */
 
   function showToast(ok) {
@@ -60,7 +79,7 @@
     if (toastMark) toastMark.textContent = ok ? "✓" : "!";
     if (toastText) toastText.textContent = ok ? "email copied" : "copy failed";
 
-    // Remove then re-add to retrigger the CSS transition
+    // Remove then re-add to retrigger the CSS transition cleanly
     copyToast.classList.remove("is-visible");
     void copyToast.offsetWidth;
     copyToast.classList.add("is-visible");
@@ -76,18 +95,19 @@
     copyTriggers.forEach((el) => el.setAttribute("aria-label", RESET_LABEL));
   }
 
+
   /* --------------------------------------------------------------------------
-     Copy action
+     Copy Action
      -------------------------------------------------------------------------- */
 
   async function executeCopy(email = EMAIL) {
     const ok = await copyToClipboard(email);
 
-    // Update aria-labels
+    // Update aria-labels on all copy triggers
     const label = ok ? "Email copied to clipboard" : "Could not copy email";
     copyTriggers.forEach((el) => el.setAttribute("aria-label", label));
 
-    // Update copy prompt text
+    // Update the inline copy prompt text
     if (copyPrompt) {
       copyPrompt.textContent = ok ? "[ copied ✓ ]" : "[ try again ]";
       copyPrompt.classList.toggle("is-copied", ok);
@@ -99,8 +119,9 @@
     showToast(ok);
   }
 
+
   /* --------------------------------------------------------------------------
-     Event listeners
+     Event Listeners
      -------------------------------------------------------------------------- */
 
   // Click on any [data-email] element
@@ -118,4 +139,6 @@
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === "c" || e.key === "C") executeCopy();
   });
+
+
 })();

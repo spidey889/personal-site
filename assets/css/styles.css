@@ -11,7 +11,7 @@
 :root {
 
   /* Colors */
-  --canvas: #111214;
+  --canvas: #0f0f0f;
   --copy: #dedcd7;
   --copy-muted: #95948f;
   --link: #f3f1ec;
@@ -54,13 +54,13 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--canvas);
-  background-image: radial-gradient(circle at 50% 0%, #1a1c20 0%, #111214 75%);
+  background-image: radial-gradient(circle at 50% 0%, #171717 0%, #0f0f0f 75%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--copy);
   font-family: var(--font-serif);
-  font-size: 19px;
-  line-height: 1.68;
+  font-size: 18.5px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -131,7 +131,7 @@ a:hover .link-arrow {
 
 .reference-page {
   min-height: 100vh;
-  padding: 148px 24px 140px;
+  padding: 88px 24px 48px;
   display: flex;
   flex-direction: column;
 }
@@ -158,12 +158,12 @@ a:hover .link-arrow {
 }
 
 .identity  { animation: fadeUp 700ms var(--ease-spring)  50ms both; }
-.bio       { animation: fadeUp 700ms var(--ease-spring) 130ms both; margin-top: 54px; }
-.writeups  { animation: fadeUp 700ms var(--ease-spring) 210ms both; margin-top: 58px; }
+.bio       { animation: fadeUp 700ms var(--ease-spring) 130ms both; margin-top: 42px; }
+.writeups  { animation: fadeUp 700ms var(--ease-spring) 210ms both; margin-top: 46px; }
 
 .reference-footer {
   animation: fadeUp 700ms var(--ease-spring) 290ms both;
-  margin-top: 58px;
+  margin-top: 50px;
 }
 
 
@@ -175,16 +175,16 @@ a:hover .link-arrow {
   margin: 0;
   color: #f3f1ec;
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 500;
   letter-spacing: -0.015em;
   line-height: 1.15;
 }
 
 .identity p {
-  margin: 8px 0 0;
+  margin: 7px 0 0;
   color: var(--copy-muted);
-  font-size: 17.5px;
+  font-size: 16.5px;
   line-height: 1.45;
   letter-spacing: -0.005em;
 }
@@ -196,10 +196,10 @@ a:hover .link-arrow {
 
 .bio p {
   max-width: 700px;
-  margin: 0 0 26px;
+  margin: 0 0 18px;
   color: var(--copy);
-  font-size: 19px;
-  line-height: 1.68;
+  font-size: 18.5px;
+  line-height: 1.65;
 }
 
 .bio p:last-child {
@@ -217,10 +217,10 @@ a:hover .link-arrow {
    -------------------------------------------------------------------------- */
 
 .writeups h2 {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: var(--copy-muted);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0.02em;
@@ -229,7 +229,7 @@ a:hover .link-arrow {
 
 .writeup-list {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .writeup {
@@ -237,14 +237,14 @@ a:hover .link-arrow {
   grid-template-columns: 80px 1fr;
   align-items: baseline;
   color: var(--copy);
-  font-size: 18.5px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.55;
 }
 
 .writeup time {
   color: var(--copy-muted);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13.5px;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
 }
@@ -275,7 +275,7 @@ a:hover .link-arrow {
   padding-top: 16px;
   border-top: 1px solid var(--border-subtle);
   color: var(--copy);
-  font-size: 18.5px;
+  font-size: 18px;
 }
 
 .footer-link {
@@ -342,7 +342,7 @@ a:hover .link-arrow {
   gap: 9px;
   padding: 8px 14px;
   color: #ebe9e4;
-  background: rgba(26, 28, 31, 0.9);
+  background: rgba(24, 24, 24, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -404,18 +404,18 @@ a:hover .link-arrow {
 
 @media (max-width: 640px) {
 
-  .reference-page   { padding: 80px 20px 72px; }
+  .reference-page   { padding: 64px 20px 44px; }
 
-  .identity h1      { font-size: 25px; }
-  .identity p       { font-size: 16px; }
+  .identity h1      { font-size: 23px; }
+  .identity p       { font-size: 15.5px; }
 
-  .bio              { margin-top: 44px; }
-  .bio p            { font-size: 17.5px; line-height: 1.65; margin-bottom: 22px; }
+  .bio              { margin-top: 34px; }
+  .bio p            { font-size: 17px; line-height: 1.62; margin-bottom: 14px; }
 
-  .writeups         { margin-top: 46px; }
+  .writeups         { margin-top: 36px; }
   .writeup          { grid-template-columns: 64px 1fr; font-size: 17px; }
 
-  .reference-footer { margin-top: 48px; gap: 20px; font-size: 17px; }
+  .reference-footer { margin-top: 40px; gap: 20px; font-size: 17px; }
 
   .copy-prompt      { font-size: 12px; }
   .copy-toast       { right: 16px; bottom: 16px; font-size: 13px; }
